@@ -9,10 +9,14 @@ function [b,ndx,pos] = unique(a,flag)
 
   if nargin==1 || isempty(flag),
     % Convert matrices and rectangular empties into columns
-    if length(a) ~= prod(size(a)) | (isempty(a) & any(size(a)))
+    if length(a) ~= prod(size(a)) | (isempty(a) && any(size(a)))
        a = a(:);
     end
     [b, ndx] = sort(a); nb = length(b);
+    % Convert cell array of strings to character array
+    if iscellstr(b),
+      b = strvcat(b);
+    end
     % d indicates the location of matching entries
     d = b((1:nb - 1)') == b((2:nb)');
     b(find(d)) = [];
@@ -24,6 +28,10 @@ function [b,ndx,pos] = unique(a,flag)
     if ~isstr(flag) | ~strcmp(flag,'rows'), error('Unknown flag.'); end
     [b, ndx] = sort(a); nb = size(b,1);
     [m, n] = size(a);
+    % Convert cell array of strings to character array
+    if iscellstr(b),
+      b = strvcat(b);
+    end
     if m > 1 && n ~= 0
       % d indicates the location of matching entries
       d = b(1:nb - 1,:)==b(2:nb,:);
