@@ -25,7 +25,7 @@ function [b,ndx,pos] = unique(a,flag)
       pos(ndx) = cumsum([1; ~d(:)]);
     end
   else
-    if ~isstr(flag) | ~strcmp(flag,'rows'), error('Unknown flag.'); end
+    if ~ischar(flag) | ~strcmp(flag,'rows'), error('Unknown flag.'); end
     [b, ndx] = sort(a); nb = size(b,1);
     [m, n] = size(a);
     % Convert cell array of strings to character array
